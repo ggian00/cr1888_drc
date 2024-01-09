@@ -36,6 +36,9 @@ class Table:
                 writer.writerow(row)
 
     def right_join_csv(self, file: str, on: str = None) -> "Table":
+        if len(self) == 0:
+            raise RuntimeError("Cannot join with empty table.")
+
         if on is None:
             on = next(iter(self.data_dict))  # get first key by default
         elif on not in self.data_dict:
